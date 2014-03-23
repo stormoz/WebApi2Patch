@@ -14,14 +14,10 @@
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            var validationResults = new List<ValidationResult>();
-
             if (Name == "blabla")
             {
-                validationResults.Add(new ValidationResult("Model is invalid!"));
+                yield return new ValidationResult("Model is invalid!");
             }
-
-            return validationResults;
         }
     }
 }
