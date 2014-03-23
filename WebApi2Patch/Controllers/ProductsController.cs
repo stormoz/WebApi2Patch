@@ -1,10 +1,11 @@
 ﻿namespace WebApi2Patch.Controllers
 {
     using System.Linq;
-
-    using WebApi2Patch.Models;
-    using System.Web.Http.OData;
     using System.Web.Http;
+    using System.Web.Http.OData;
+    using WebApi2Patch.Models;
+
+    //the code is only to demo usage of PATCH with Delta
 
     //http://aspnet.codeplex.com/sourcecontrol/latest#Samples/WebApi/DeltaJsonDeserialization/DeltaJsonDeserialization.Server/Controllers/PatchController.cs
     public class ProductsController : ApiController
@@ -15,7 +16,7 @@
         {
             if (ModelState.IsValid)
             {
-                //update - replace
+                //update - replace (200)
             }
             else
             {
@@ -38,16 +39,15 @@
 
                     if (ModelState.IsValid)
                     {
-                        //update - partial
+                        //update - partial (200)
                     }
                     else
                     {
-                        //400
+                        //invalid 400
                     }
                 }
             }
-            
-            //nothing changed or wrong format
+            //wrong format (400)
         }
 
         //should be repo in real life
