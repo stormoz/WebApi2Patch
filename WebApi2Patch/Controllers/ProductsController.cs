@@ -1,5 +1,7 @@
 ﻿namespace WebApi2Patch.Controllers
 {
+    using System.Linq;
+
     using WebApi2Patch.Models;
     using System.Web.Http.OData;
     using System.Web.Http;
@@ -25,26 +27,27 @@
         //{"Flag":true}
         public void Patch(int id, [FromBody]Delta<ProductModel> deltaModel)
         {
-            var model = GetProductModelById(id);
-
-            if (model != null)
+            if (deltaModel.GetChangedPropertyNames().Any())
             {
-                deltaModel.Patch(model);
-                this.Validate(model);
+                var model = GetProductModelById(id);
 
-                if (ModelState.IsValid)
+                if (model != null)
                 {
-                    //update - partial
-                }
-                else
-                {
-                    //400
+                    deltaModel.Patch(model);
+                    this.Validate(model);
+
+                    if (ModelState.IsValid)
+                    {
+                        //update - partial
+                    }
+                    else
+                    {
+                        //400
+                    }
                 }
             }
-            else
-            {
-                //404
-            }
+            
+            //nothing changed or wrong format
         }
 
         //should be repo in real life
